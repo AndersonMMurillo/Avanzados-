@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+    <div class="container py-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Listado de Estudiantes</h3>
+            </div>
+            <div class="card-body">
+                <div th:if="${success != null}" class="alert alert-success" role="alert">
+                    [[${success}]]
+                </div>
+                <div th:if="${error != null}" class="alert alert-danger" role="alert">
+                    [[${error}]]
+                </div>
+               
+                <a th:href="@{/plan/estudiantes/nuevo}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Nuevo Estudiante
+                </a>
+               
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Identificación</th>
+                            <th>Apellidos</th>
+                            <th>Nombres</th>
+                            <th>Semestre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="estudiante : ${estudiantes}">
+                            <td th:text="${estudiante.id}"></td>
+                            <td th:text="${estudiante.identificacion}"></td>
+                            <td th:text="${estudiante.apellidos}"></td>
+                            <td th:text="${estudiante.nombres}"></td>
+                            <td th:text="${estudiante.semestre_actual}"></td>
+                            <td>
+                                <a th:href="@{/plan/estudiantes/consultar/} + ${estudiante.id}"
+                                   class="btn btn-info btn-sm">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a th:href="@{/plan/estudiantes/editar/} + ${estudiante.id}"
+                                   class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a th:href="@{/plan/estudiantes/eliminar/} + ${estudiante.id}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Está seguro de eliminar este estudiante?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+</html>
