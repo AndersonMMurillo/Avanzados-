@@ -99,4 +99,6 @@ public class EstudianteController {
         model.addAttribute("estudiante", estudiante);
         return "estudiante/consultar_estudiante";
     }
+   
+
 }

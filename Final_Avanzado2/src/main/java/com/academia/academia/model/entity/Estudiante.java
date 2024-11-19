@@ -5,8 +5,11 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "estudiantes")
@@ -16,25 +19,32 @@ public class Estudiante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+   
+    @Size(min = 5, max = 10)
     @NotEmpty
     @Column(length = 20)
     private String identificacion;
     
     @NotEmpty
+    @Size(min = 2, max = 50)
     @Column(length = 50)
     private String apellidos;
     
     @NotEmpty
+    @Size(min = 2, max = 50)
     @Column(length = 50)
     private String nombres;
     
     @NotNull
+    @Min(value = 1)
+    @Max(value = 10)
     @Column(name = "semestre_actual")
     private Integer semestre_actual;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "programaAcademico_id", nullable = false)
+    @NotNull
     private ProgramaAcademico programaAcademico;
 
     public Estudiante() {
@@ -102,6 +112,7 @@ public class Estudiante implements Serializable {
     @Override
     public String toString() {
         return "Estudiante [id=" + id + ", identificacion=" + identificacion + ", apellidos=" + apellidos + ", nombres="
+
                 + nombres + ", semestre_actual=" + semestre_actual + ", programaAcademico=" + programaAcademico + "]";
     }
 
