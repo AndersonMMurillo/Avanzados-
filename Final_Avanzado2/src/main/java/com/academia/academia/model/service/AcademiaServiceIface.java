@@ -6,7 +6,6 @@ import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface AcademiaServiceIface {
