@@ -12,9 +12,6 @@ public class Curso implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nombre;
-
     @Column(length = 20)
     private String horario;
 
@@ -40,7 +37,6 @@ public class Curso implements Serializable {
 
     public Curso(Long id, String nombre, String horario, String periodo, int cupoMaximo, String aula) {
         this.id = id;
-        this.nombre = nombre;
         this.horario = horario;
         this.periodo = periodo;
         this.cupoMaximo = cupoMaximo;
@@ -53,14 +49,6 @@ public class Curso implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getHorario() {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <div class="container py-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 th:text="${matricula.id != null ? 'Editar Matricula' : 'Nueva Matricula'}"></h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/plan/estudiantes/guardarmatricula}" th:object="${matricula}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label" th:text="'Estudiante'"></label>
+                        <div class="col-sm-10">
+                            <input type="text" th:value="${matricula.estudiante.nombres}" class="form-control" disabled="disable"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="curso" class="form-label">Cursos</label>
+                        <select class="form-select" th:field="*{curso}" id="curso">
+                            <option value="">Seleccionar...</option>
+                            <option th:each="cur : ${cursos}" th:value="${cur.id}" th:text="${cur.periodo}">
+							</option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="periodo" class="form-label">Periodo</label>
+                        <input type="text" class="form-control" th:field="*{periodo}" id="periodo">
+                        <div class="text-danger" th:if="${#fields.hasErrors('periodo')}" th:errors="*{periodo}"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado curso</label>
+                        <input type="text" class="form-control" th:field="*{estado}" id="estado">
+                        <div class="text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notaFinal" class="form-label">Nota final</label>
+                        <input type="number" class="form-control" th:field="*{notaFinal}" id="notaFinal">
+                        <div class="text-danger" th:if="${#fields.hasErrors('notaFinal')}" th:errors="*{notaFinal}"></div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+</html>

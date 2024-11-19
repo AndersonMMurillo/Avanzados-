@@ -3,6 +3,7 @@ package com.academia.academia.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,10 +33,10 @@ public class ProgramaAcademico implements Serializable {
     @Column(length = 11)
     private int duracion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "programaAcademico")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "programaAcademico", cascade = CascadeType.ALL)
     private List<Estudiante> estudiantes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "programaAcademico")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "programaAcademico", cascade = CascadeType.ALL)
     private List<PlanEstudio> planEstudios;
 
     public Long getId() {

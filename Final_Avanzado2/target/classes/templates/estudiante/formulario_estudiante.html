@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es"  xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{plantillas/principal :: head}"></head>
 <body>
     <header th:replace="~{plantillas/principal :: header}"></header>
@@ -41,7 +41,7 @@
                         <label for="programaAcademico" class="form-label">Programa</label>
                         <select class="form-select" th:field="*{programaAcademico}" id="programaAcademico">
                             <option value="">Seleccionar...</option>
-                            <option th:each="prog : ${programas}" th:value="${prog}" th:text="${prog}">
+                            <option th:each="prog : ${programas}" th:value="${prog.id}" th:text="${prog.nombre_programa}">
 							</option>
                         </select>
                         <div class="text-danger" th:if="${#fields.hasErrors('programaAcademico')}" th:errors="*{programaAcademico}"></div>

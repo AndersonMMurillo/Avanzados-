@@ -14,6 +14,7 @@ import com.academia.academia.model.entity.ProgramaAcademico;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -107,6 +108,8 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     public void eliminarCurso(Long id) {
         cursoDao.deleteById(id);
     }
+
+
     // service para programa academico
     @Override
     @Transactional(readOnly = true)
@@ -132,6 +135,7 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
         programaAcademicoDao.deleteById(id);
     }
 
+    // Cursadas
     @Override
     @Transactional
     public List<AsignaturaCursada> todasasignaturaCursadas() {
@@ -142,5 +146,10 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     @Transactional
     public AsignaturaCursada asignaturaCursada(Long id) {
         return asignaturaCursadaDAO.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante) {
+       return asignaturaCursadaDAO.findByEstudiante(estudiante);
     }
 }

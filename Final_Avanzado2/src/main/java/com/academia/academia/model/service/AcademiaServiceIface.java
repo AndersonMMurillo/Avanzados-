@@ -6,6 +6,7 @@ import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface AcademiaServiceIface {
@@ -35,4 +36,5 @@ public interface AcademiaServiceIface {
     //services para Asignatura cursada
     List<AsignaturaCursada> todasasignaturaCursadas();
     AsignaturaCursada asignaturaCursada(Long id);
+    List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante); // Asignaturas cursadas del estudiante
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -44,10 +45,13 @@ public class EstudianteController {
     @GetMapping("/editar/{id}")
     public String editarEstudiante(@PathVariable Long id, Model model, RedirectAttributes flash) {
         Estudiante estudiante = service.buscarEstudiante(id);
+        List<ProgramaAcademico> programaAcademicos = service.todosProgramasAcademicos();
         if (estudiante == null) {
             flash.addFlashAttribute("error", "El estudiante no existe");
             return "redirect:/plan/estudiantes/listar";
         }
+
+        model.addAttribute("programas", programaAcademicos);
         model.addAttribute("titulo", "Editar Estudiante");
         model.addAttribute("estudiante", estudiante);
         return "estudiante/formulario_estudiante";
@@ -55,16 +59,17 @@ public class EstudianteController {
 
     @PostMapping("/guardar")
     public String guardarEstudiante(@Valid @ModelAttribute Estudiante estudiante, 
-                                  BindingResult result, 
-                                  RedirectAttributes flash,
-                                  Model model) {
+        BindingResult result, RedirectAttributes flash,Model model, SessionStatus status) {
+         
         if (result.hasErrors()) {
             model.addAttribute("titulo", estudiante.getId() != null ? "Editar Estudiante" : "Nuevo Estudiante");
+            model.addAttribute("info", "Complemente o corrija la información de los campos del formulario");
             return "estudiante/formulario_estudiante";
         }
 
         String mensajeFlash = (estudiante.getId() != null) ? "Estudiante editado con éxito" : "Estudiante creado con éxito";
         service.guardarEstudiante(estudiante);
+        status.setComplete();
         flash.addFlashAttribute("success", mensajeFlash);
         return "redirect:/plan/estudiantes/listar";
     }
@@ -82,11 +87,14 @@ public class EstudianteController {
 
     @GetMapping("/consultar/{id}")
     public String verEstudiante(@PathVariable Long id, Model model, RedirectAttributes flash) {
+
         Estudiante estudiante = service.buscarEstudiante(id);
+        
         if (estudiante == null) {
             flash.addFlashAttribute("error", "El estudiante no existe");
             return "redirect:/plan/estudiantes/listar";
         }
+        
         model.addAttribute("titulo", "Detalle del Estudiante");
         model.addAttribute("estudiante", estudiante);
         return "estudiante/consultar_estudiante";

@@ -20,6 +20,9 @@ public class CursoMatriculado implements Serializable {
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
 
+    @Column(length = 50)
+    private String periodo;
+
     @Column(length = 20)
     private String estado;
 

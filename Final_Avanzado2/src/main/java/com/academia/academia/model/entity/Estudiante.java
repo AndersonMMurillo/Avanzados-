@@ -2,6 +2,8 @@ package com.academia.academia.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,14 +31,24 @@ public class Estudiante implements Serializable {
     @NotNull
     @Column(name = "semestre_actual")
     private Integer semestre_actual;
-    
-    @NotEmpty
-    @Column(name = "tipo_identificacion", length = 20)
-    private String tipoIdentificacion;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "programaAcademico_id", nullable = false)
     private ProgramaAcademico programaAcademico;
+
+    public Estudiante() {
+    }
+
+    public Estudiante(Long id, String identificacion, String apellidos, String nombres,
+             Integer semestre_actual, ProgramaAcademico programaAcademico) {
+        this.id = id;
+        this.identificacion = identificacion;
+        this.apellidos = apellidos;
+        this.nombres = nombres;
+        this.semestre_actual = semestre_actual;
+        this.programaAcademico = programaAcademico;
+    }
 
     // Getters y Setters
     public Long getId() {
@@ -79,14 +91,6 @@ public class Estudiante implements Serializable {
         this.semestre_actual = semestre_actual;
     }
 
-    public String getTipoIdentificacion() {
-        return tipoIdentificacion;
-    }
-
-    public void setTipoIdentificacion(String tipoIdentificacion) {
-        this.tipoIdentificacion = tipoIdentificacion;
-    }
-
     public ProgramaAcademico getProgramaAcademico() {
         return programaAcademico;
     }
@@ -98,6 +102,7 @@ public class Estudiante implements Serializable {
     @Override
     public String toString() {
         return "Estudiante [id=" + id + ", identificacion=" + identificacion + ", apellidos=" + apellidos + ", nombres="
-                + nombres + ", semestre_actual=" + semestre_actual + ", tipoIdentificacion=" + tipoIdentificacion + "]";
+                + nombres + ", semestre_actual=" + semestre_actual + ", programaAcademico=" + programaAcademico + "]";
     }
+
 }
