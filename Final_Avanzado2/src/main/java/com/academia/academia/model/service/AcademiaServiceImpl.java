@@ -1,10 +1,12 @@
 package com.academia.academia.model.service;
 
+import com.academia.academia.model.dao.AsignaturaCursadaDAOIface;
 import com.academia.academia.model.dao.AsignaturaDAOIface;
 import com.academia.academia.model.dao.CursoDAOIface;
 import com.academia.academia.model.dao.EstudianteDAOIface;
 import com.academia.academia.model.dao.ProgramaAcademicoDAOIface;
 import com.academia.academia.model.entity.Asignatura;
+import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
@@ -21,12 +23,15 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     private final AsignaturaDAOIface asignaturaDao;
     private final CursoDAOIface cursoDao;
     private final ProgramaAcademicoDAOIface programaAcademicoDao;
+    private final AsignaturaCursadaDAOIface asignaturaCursadaDAO;
 
-    public AcademiaServiceImpl(EstudianteDAOIface estudianteDao, AsignaturaDAOIface asignaturaDao, CursoDAOIface cursoDao, ProgramaAcademicoDAOIface programaAcademicoDao) {
+    public AcademiaServiceImpl(EstudianteDAOIface estudianteDao, AsignaturaDAOIface asignaturaDao, 
+    CursoDAOIface cursoDao, ProgramaAcademicoDAOIface programaAcademicoDao, AsignaturaCursadaDAOIface asignaturaCursadaDAO) {
         this.estudianteDao = estudianteDao;
         this.asignaturaDao = asignaturaDao;
         this.cursoDao = cursoDao;
         this.programaAcademicoDao = programaAcademicoDao;
+        this.asignaturaCursadaDAO = asignaturaCursadaDAO;
     }
 
     @Override
@@ -125,5 +130,17 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     @Transactional
     public void eliminarProgramaAcademico(Long id) {
         programaAcademicoDao.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public List<AsignaturaCursada> todasasignaturaCursadas() {
+        return asignaturaCursadaDAO.findAll();
+    }
+
+    @Override
+    @Transactional
+    public AsignaturaCursada asignaturaCursada(Long id) {
+        return asignaturaCursadaDAO.findById(id).orElse(null);
     }
 }

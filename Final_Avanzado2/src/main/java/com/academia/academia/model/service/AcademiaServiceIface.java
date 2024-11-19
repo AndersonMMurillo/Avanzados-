@@ -1,6 +1,7 @@
 package com.academia.academia.model.service;
 
 import com.academia.academia.model.entity.Asignatura;
+import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
@@ -30,4 +31,8 @@ public interface AcademiaServiceIface {
     void guardarProgramaAcademico(ProgramaAcademico programaAcademico);
     ProgramaAcademico buscarProgramaAcademico(Long id);
     void eliminarProgramaAcademico(Long id);
+
+    //services para Asignatura cursada
+    List<AsignaturaCursada> todasasignaturaCursadas();
+    AsignaturaCursada asignaturaCursada(Long id);
 }
