@@ -1,6 +1,7 @@
 package com.academia.academia.controller;
 
 import com.academia.academia.model.entity.Estudiante;
+import com.academia.academia.model.entity.ProgramaAcademico;
 import com.academia.academia.model.service.AcademiaServiceIface;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,12 @@ public class EstudianteController {
 
     @GetMapping("/nuevo")
     public String nuevoEstudiante(Model model) {
+
+        List<ProgramaAcademico> programaAcademicos = service.todosProgramasAcademicos();
+
         model.addAttribute("titulo", "Nuevo Estudiante");
         model.addAttribute("estudiante", new Estudiante());
+        model.addAttribute("programas", programaAcademicos);
         return "estudiante/formulario_estudiante";
     }
 
