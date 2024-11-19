@@ -38,14 +38,13 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label for="tipoIdentificacion" class="form-label">Tipo de Identificación</label>
-                        <select class="form-select" th:field="*{tipoIdentificacion}" id="tipoIdentificacion">
+                        <label for="programaAcademico" class="form-label">Programa</label>
+                        <select class="form-select" th:field="*{programaAcademico}" id="programaAcademico">
                             <option value="">Seleccionar...</option>
-                            <option value="CC">Cédula de Ciudadanía</option>
-                            <option value="TI">Tarjeta de Identidad</option>
-                            <option value="CE">Cédula de Extranjería</option>
+                            <option th:each="prog : ${programas}" th:value="${prog}" th:text="${prog}">
+							</option>
                         </select>
-                        <div class="text-danger" th:if="${#fields.hasErrors('tipoIdentificacion')}" th:errors="*{tipoIdentificacion}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('programaAcademico')}" th:errors="*{programaAcademico}"></div>
                     </div>
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
