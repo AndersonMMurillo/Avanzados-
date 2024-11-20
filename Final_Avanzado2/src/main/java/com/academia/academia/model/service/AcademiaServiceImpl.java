@@ -3,11 +3,13 @@ package com.academia.academia.model.service;
 import com.academia.academia.model.dao.AsignaturaCursadaDAOIface;
 import com.academia.academia.model.dao.AsignaturaDAOIface;
 import com.academia.academia.model.dao.CursoDAOIface;
+import com.academia.academia.model.dao.CursoMatriculadoDAOIface;
 import com.academia.academia.model.dao.EstudianteDAOIface;
 import com.academia.academia.model.dao.ProgramaAcademicoDAOIface;
 import com.academia.academia.model.entity.Asignatura;
 import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.Curso;
+import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
 
@@ -24,14 +26,17 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     private final CursoDAOIface cursoDao;
     private final ProgramaAcademicoDAOIface programaAcademicoDao;
     private final AsignaturaCursadaDAOIface asignaturaCursadaDAO;
+    private final CursoMatriculadoDAOIface cursoMatriculadoDAO; 
 
     public AcademiaServiceImpl(EstudianteDAOIface estudianteDao, AsignaturaDAOIface asignaturaDao, 
-    CursoDAOIface cursoDao, ProgramaAcademicoDAOIface programaAcademicoDao, AsignaturaCursadaDAOIface asignaturaCursadaDAO) {
+    CursoDAOIface cursoDao, ProgramaAcademicoDAOIface programaAcademicoDao, AsignaturaCursadaDAOIface asignaturaCursadaDAO,
+    CursoMatriculadoDAOIface cursoMatriculadoDAO) {
         this.estudianteDao = estudianteDao;
         this.asignaturaDao = asignaturaDao;
         this.cursoDao = cursoDao;
         this.programaAcademicoDao = programaAcademicoDao;
         this.asignaturaCursadaDAO = asignaturaCursadaDAO;
+        this.cursoMatriculadoDAO = cursoMatriculadoDAO;
     }
 
     @Override
@@ -150,5 +155,11 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     @Override
     public List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante) {
        return asignaturaCursadaDAO.findByEstudiante(estudiante);
+    }
+
+    // matriculados
+    @Override
+    public List<CursoMatriculado> cursoMatriculadoEstudiante(Estudiante estudiante) {
+        return cursoMatriculadoDAO.findByEstudiante(estudiante);
     }
 }

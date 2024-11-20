@@ -3,6 +3,7 @@ package com.academia.academia.model.service;
 import com.academia.academia.model.entity.Asignatura;
 import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.Curso;
+import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
 
@@ -36,4 +37,7 @@ public interface AcademiaServiceIface {
     List<AsignaturaCursada> todasasignaturaCursadas();
     AsignaturaCursada asignaturaCursada(Long id);
     List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante); // Asignaturas cursadas del estudiante
+
+    // services para Curso matriculado
+    List<CursoMatriculado> cursoMatriculadoEstudiante(Estudiante estudiante);
 }

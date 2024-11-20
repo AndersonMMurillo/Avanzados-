@@ -94,8 +94,8 @@ public class EstudianteController {
             flash.addFlashAttribute("error", "El estudiante no existe");
             return "redirect:/plan/estudiantes/listar";
         }
-        
-        model.addAttribute("titulo", "Detalle del Estudiante");
+
+        model.addAttribute("titulo", "Detalle del Estudiante: " + estudiante.getApellidos());
         model.addAttribute("estudiante", estudiante);
         return "estudiante/consultar_estudiante";
     }

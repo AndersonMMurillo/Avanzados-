@@ -64,6 +64,14 @@ public class CursoMatriculado implements Serializable {
         this.curso = curso;
     }
 
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
     public String getEstado() {
         return estado;
     }
@@ -78,8 +86,5 @@ public class CursoMatriculado implements Serializable {
 
     public void setNotaFinal(double notaFinal) {
         this.notaFinal = notaFinal;
-    }
-
-    
-    
+    }  
 }

@@ -14,8 +14,8 @@
                     <input type="hidden" th:field="*{id}">
                     
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label" th:text="'Estudiante'"></label>
-                        <div class="col-sm-10">
+                        <label class="form-label" th:text="'Estudiante'"></label>
+                        <div class="col">
                             <input type="text" th:value="${matricula.estudiante.nombres}" class="form-control" disabled="disable"/>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                         <label for="curso" class="form-label">Cursos</label>
                         <select class="form-select" th:field="*{curso}" id="curso">
                             <option value="">Seleccionar...</option>
-                            <option th:each="cur : ${cursos}" th:value="${cur.id}" th:text="${cur.periodo}">
+                            <option th:each="cur : ${cursos}" th:value="${cur.id}" th:text="${cur.asignatura.nombre}">
 							</option>
                         </select>
                         <div class="text-danger" th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}"></div>

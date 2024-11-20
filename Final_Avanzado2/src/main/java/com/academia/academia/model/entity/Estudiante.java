@@ -1,6 +1,8 @@
 package com.academia.academia.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,7 +21,6 @@ public class Estudiante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   
     @Size(min = 5, max = 10)
     @NotEmpty
     @Column(length = 20)
@@ -46,8 +47,15 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "programaAcademico_id", nullable = false)
     @NotNull
     private ProgramaAcademico programaAcademico;
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CursoMatriculado> cursoMatriculados;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AsignaturaCursada> asignaturaCursadas;
 
     public Estudiante() {
+        cursoMatriculados = new ArrayList<>();
     }
 
     public Estudiante(Long id, String identificacion, String apellidos, String nombres,
@@ -107,6 +115,26 @@ public class Estudiante implements Serializable {
 
     public void setProgramaAcademico(ProgramaAcademico programaAcademico) {
         this.programaAcademico = programaAcademico;
+    }
+
+    public List<CursoMatriculado> getCursoMatriculados() {
+        return cursoMatriculados;
+    }
+
+    public void setCursoMatriculados(List<CursoMatriculado> cursoMatriculados) {
+        this.cursoMatriculados = cursoMatriculados;
+    }
+
+    public void addCurso(CursoMatriculado cursoMatriculado) {
+        this.cursoMatriculados.add(cursoMatriculado);
+    }
+
+    public List<AsignaturaCursada> getAsignaturaCursadas() {
+        return asignaturaCursadas;
+    }
+
+    public void setAsignaturaCursadas(List<AsignaturaCursada> asignaturaCursadas) {
+        this.asignaturaCursadas = asignaturaCursadas;
     }
 
     @Override

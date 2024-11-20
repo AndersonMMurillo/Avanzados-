@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.Curso;
-//import com.academia.academia.model.entity.AsignaturaCursada;
 import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.service.AcademiaServiceIface;
@@ -64,10 +63,30 @@ public class MatriculaController {
     @PostMapping("/guardarmatricula")
     public String guardarMatricula(@ModelAttribute CursoMatriculado cursoMatriculado, RedirectAttributes flash) {
 
-        
+        Estudiante estudiante = academiaService.buscarEstudiante(cursoMatriculado.getEstudiante().getId());
 
-        
+        List<CursoMatriculado> cursoMatriculados = academiaService.cursoMatriculadoEstudiante(estudiante);
+        List<AsignaturaCursada> cursados = academiaService.asignaturaCursadasEstudiante(estudiante);
 
+        for (AsignaturaCursada mat : cursados) {
+            if (mat.getEstudiante() != null && cursoMatriculado.getCurso() != null && 
+                mat.getEstudiante().getId().equals(cursoMatriculado.getCurso().getId())) {
+
+                    flash.addFlashAttribute("warning", "la materia ya ha sido cursada");
+                    return "redirect:/plan/estudiantes/consultar/" + cursoMatriculado.getEstudiante().getId();
+            }
+        }
+        
+        int creditos = 0;
+        for (CursoMatriculado curmat : cursoMatriculados){
+            creditos += curmat.getCurso().getAsignatura().getNumero_creditos();
+        }
+
+        if (creditos > 22) {
+            flash.addFlashAttribute("warning", "Has alcanzado el limite de creditos");
+            return "redirect:/plan/estudiantes/consultar/" + cursoMatriculado.getEstudiante().getId();
+        }
+         
         return "redirect:/plan/estudiantes/consultar/" + cursoMatriculado.getEstudiante().getId();
     }
 }
