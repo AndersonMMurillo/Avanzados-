@@ -1,5 +1,6 @@
 package com.academia.academia.controller;
 
+import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
 import com.academia.academia.model.entity.ProgramaAcademico;
 import com.academia.academia.model.service.AcademiaServiceIface;
@@ -93,16 +94,19 @@ public class EstudianteController {
     public String verEstudiante(@PathVariable Long id, Model model, RedirectAttributes flash) {
 
         Estudiante estudiante = service.buscarEstudiante(id);
-        
         if (estudiante == null) {
             flash.addFlashAttribute("error", "El estudiante no existe");
             return "redirect:/plan/estudiantes/listar";
         }
 
+        int totalCreditos = 0;
+        for (CursoMatriculado cursoMatriculado : estudiante.getCursoMatriculados()) {
+            totalCreditos += cursoMatriculado.getCurso().getAsignatura().getNumero_creditos();
+        }
+        
         model.addAttribute("titulo", "Detalle del Estudiante: " + estudiante.getApellidos());
         model.addAttribute("estudiante", estudiante);
+        model.addAttribute("totalCreditos", totalCreditos);
         return "estudiante/consultar_estudiante";
     }
-   
-
 }

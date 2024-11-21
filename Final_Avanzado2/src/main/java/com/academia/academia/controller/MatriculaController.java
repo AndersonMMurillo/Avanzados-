@@ -71,12 +71,11 @@ public class MatriculaController {
 
                 AsignaturaPlan planAsignatura = curso.getAsignatura().getAsignaturaPlans().get(0);
 
-                // Ander verificar estas condiciones:
+                // Ander esto verifica estas condiciones:
                 // 1. Si el semestre actual es igual
-                // 2. Si no hay prerequisito O el prerequisito ya ha sido aprobado
+                // 2. Si no hay prerequisito o el prerequisito ya ha sido aprobado
                 if (planAsignatura.getPlanEstudio().getProgramaAcademico().getId().equals(programaAcademico.getId()) &&
-                        (planAsignatura.getPrerequisito() == null ||
-                                asignaturasAprobadas.contains(planAsignatura.getPrerequisito()))) {
+                        (planAsignatura.getPrerequisito() == null || asignaturasAprobadas.contains(planAsignatura.getPrerequisito()))) {
                     cursosFiltrados.add(curso);
                 }
             }
@@ -99,7 +98,7 @@ public class MatriculaController {
 
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Nueva Matricula");
-            model.addAttribute("info", "Complemente o corrija la información de los campos del formulario");
+            flash.addAttribute("error", "Complemente o corrija la información de los campos del formulario");  
             return "matriculas/matricula_nueva";
         }
 
@@ -115,9 +114,11 @@ public class MatriculaController {
             creditos += curmat.getCurso().getAsignatura().getNumero_creditos();
         }
 
-        if (creditos >= 22) {
-            model.addAttribute("titulo", "Nueva Matricula");
-            flash.addFlashAttribute("warning", "Has alcanzado el limite de creditos");
+        int creditoCursonuevo = cursoMatriculado.getCurso().getAsignatura().getNumero_creditos();
+
+        if (creditos + creditoCursonuevo  > 22) {
+            model.addAttribute("titulo", "Nueva matricula");
+            flash.addFlashAttribute("warning", "No se puede matricular. Límite de créditos excedido o se puede exceder");
             return "redirect:/plan/estudiantes/consultar/" + cursoMatriculado.getEstudiante().getId();
         }
 
@@ -135,9 +136,9 @@ public class MatriculaController {
 
         if (cursoMatriculado != null) {
             academiaService.eliminarMatricula(id);
-            flash.addFlashAttribute("success", "La matricula con número " + cursoMatriculado.getId() + "fue eliminada");
+            flash.addFlashAttribute("success", "La matricula con número " + cursoMatriculado.getId() + " fue eliminada");
         } else {
-            flash.addFlashAttribute("error", "La matricula con el número " + id + "No fue encontrada");
+            flash.addFlashAttribute("error", "La matricula con el número " + id + " No fue encontrada");
         }
 
         return "redirect:/plan/estudiantes/consultar/" + cursoMatriculado.getEstudiante().getId();

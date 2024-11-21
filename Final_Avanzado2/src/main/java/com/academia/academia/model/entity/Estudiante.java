@@ -126,18 +126,9 @@ public class Estudiante implements Serializable {
         this.cursoMatriculados.add(cursoMatriculado);
     }
 
-    public Integer getTotalCreditosMatriculados() {
-        int totalCreditos = 0;
-        for (CursoMatriculado cursoMatriculado : cursoMatriculados) {
-            totalCreditos += cursoMatriculado.getCurso().getAsignatura().getNumero_creditos();
-        }
-        return totalCreditos;
-    }
-
     @Override
     public String toString() {
         return "Estudiante [id=" + id + ", identificacion=" + identificacion + ", apellidos=" + apellidos + ", nombres="
-
                 + nombres + ", semestre_actual=" + semestre_actual + ", programaAcademico=" + programaAcademico + "]";
     }
 
