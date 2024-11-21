@@ -51,9 +51,6 @@ public class Estudiante implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CursoMatriculado> cursoMatriculados;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AsignaturaCursada> asignaturaCursadas;
-
     public Estudiante() {
         cursoMatriculados = new ArrayList<>();
     }
@@ -102,12 +99,12 @@ public class Estudiante implements Serializable {
     }
 
     public Integer getSemestre_actual() {
-        return semestre_actual;
+        return semestre_actual != null ? semestre_actual : 1;
     }
 
     public void setSemestre_actual(Integer semestre_actual) {
         this.semestre_actual = semestre_actual;
-    }
+    } 
 
     public ProgramaAcademico getProgramaAcademico() {
         return programaAcademico;
@@ -129,12 +126,12 @@ public class Estudiante implements Serializable {
         this.cursoMatriculados.add(cursoMatriculado);
     }
 
-    public List<AsignaturaCursada> getAsignaturaCursadas() {
-        return asignaturaCursadas;
-    }
-
-    public void setAsignaturaCursadas(List<AsignaturaCursada> asignaturaCursadas) {
-        this.asignaturaCursadas = asignaturaCursadas;
+    public Integer getTotalCreditosMatriculados() {
+        int totalCreditos = 0;
+        for (CursoMatriculado cursoMatriculado : cursoMatriculados) {
+            totalCreditos += cursoMatriculado.getCurso().getAsignatura().getNumero_creditos();
+        }
+        return totalCreditos;
     }
 
     @Override

@@ -69,7 +69,4 @@ public class AsignaturaCursada implements Serializable {
                 + ", notaFinal=" + notaFinal + "]";
     }
 
-   
-    
-
 }

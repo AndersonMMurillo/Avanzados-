@@ -95,4 +95,10 @@ public class ProgramaAcademico implements Serializable {
         this.planEstudios = planEstudios;
     }
 
+    @Override
+    public String toString() {
+        return "ProgramaAcademico [id=" + id + ", nombre_programa=" + nombre_programa + ", facultad=" + facultad
+                + ", titulo_otorgado=" + titulo_otorgado + ", duracion=" + duracion + "]";
+    }
+
 }

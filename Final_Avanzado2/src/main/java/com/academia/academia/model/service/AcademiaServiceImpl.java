@@ -2,12 +2,14 @@ package com.academia.academia.model.service;
 
 import com.academia.academia.model.dao.AsignaturaCursadaDAOIface;
 import com.academia.academia.model.dao.AsignaturaDAOIface;
+import com.academia.academia.model.dao.AsignaturaPlanDAOIface;
 import com.academia.academia.model.dao.CursoDAOIface;
 import com.academia.academia.model.dao.CursoMatriculadoDAOIface;
 import com.academia.academia.model.dao.EstudianteDAOIface;
 import com.academia.academia.model.dao.ProgramaAcademicoDAOIface;
 import com.academia.academia.model.entity.Asignatura;
 import com.academia.academia.model.entity.AsignaturaCursada;
+import com.academia.academia.model.entity.AsignaturaPlan;
 import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
@@ -26,17 +28,19 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
     private final CursoDAOIface cursoDao;
     private final ProgramaAcademicoDAOIface programaAcademicoDao;
     private final AsignaturaCursadaDAOIface asignaturaCursadaDAO;
-    private final CursoMatriculadoDAOIface cursoMatriculadoDAO; 
+    private final CursoMatriculadoDAOIface cursoMatriculadoDAO;
+    private final AsignaturaPlanDAOIface asignaturaPlanDAO; 
 
     public AcademiaServiceImpl(EstudianteDAOIface estudianteDao, AsignaturaDAOIface asignaturaDao, 
     CursoDAOIface cursoDao, ProgramaAcademicoDAOIface programaAcademicoDao, AsignaturaCursadaDAOIface asignaturaCursadaDAO,
-    CursoMatriculadoDAOIface cursoMatriculadoDAO) {
+    CursoMatriculadoDAOIface cursoMatriculadoDAO, AsignaturaPlanDAOIface asignaturaPlanDAO) {
         this.estudianteDao = estudianteDao;
         this.asignaturaDao = asignaturaDao;
         this.cursoDao = cursoDao;
         this.programaAcademicoDao = programaAcademicoDao;
         this.asignaturaCursadaDAO = asignaturaCursadaDAO;
         this.cursoMatriculadoDAO = cursoMatriculadoDAO;
+        this.asignaturaPlanDAO = asignaturaPlanDAO;
     }
 
     @Override
@@ -141,25 +145,54 @@ public class AcademiaServiceImpl implements AcademiaServiceIface {
 
     // Cursadas
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<AsignaturaCursada> todasasignaturaCursadas() {
         return asignaturaCursadaDAO.findAll();
     }
 
     @Override
     @Transactional
-    public AsignaturaCursada asignaturaCursada(Long id) {
+    public AsignaturaCursada buscarAsignaturaCursada(Long id) {
         return asignaturaCursadaDAO.findById(id).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante) {
        return asignaturaCursadaDAO.findByEstudiante(estudiante);
     }
 
     // matriculados
     @Override
+    @Transactional(readOnly = true)
     public List<CursoMatriculado> cursoMatriculadoEstudiante(Estudiante estudiante) {
         return cursoMatriculadoDAO.findByEstudiante(estudiante);
     }
+
+    @Override
+    @Transactional
+    public void guardarMatricula(CursoMatriculado cursoMatriculado) {
+        cursoMatriculadoDAO.save(cursoMatriculado);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CursoMatriculado buscarCursoMatriculado(Long id) {
+        return cursoMatriculadoDAO.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarMatricula(Long id) {
+        cursoMatriculadoDAO.deleteById(id);
+    }
+
+    // plan asignaturas
+    @Override
+    @Transactional(readOnly = true)
+    public List<AsignaturaPlan> todAsignaturaPlans() {
+        return asignaturaPlanDAO.findAll();
+    }
+
+
 }

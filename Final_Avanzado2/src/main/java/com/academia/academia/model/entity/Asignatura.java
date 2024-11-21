@@ -86,12 +86,6 @@ public class Asignatura implements Serializable {
         this.cursos = cursos;
     }
 
-    @Override
-    public String toString() {
-        return "Asignatura [id=" + id + ", nombre=" + nombre + ", numero_creditos=" + numero_creditos
-                + ", departamento=" + departamento + "]";
-    }
-
     public List<AsignaturaPlan> getAsignaturaPlans() {
         return asignaturaPlans;
     }
@@ -99,5 +93,16 @@ public class Asignatura implements Serializable {
     public void setAsignaturaPlans(List<AsignaturaPlan> asignaturaPlans) {
         this.asignaturaPlans = asignaturaPlans;
     }
+
+    @Override
+    public String toString() {
+        return "Asignatura [id=" + id + ", nombre=" + nombre + ", numero_creditos=" + numero_creditos
+                + ", departamento=" + departamento + "]";
+    }
+
+    public Integer creditos() {
+        return numero_creditos++;
+    }
     
+
 }

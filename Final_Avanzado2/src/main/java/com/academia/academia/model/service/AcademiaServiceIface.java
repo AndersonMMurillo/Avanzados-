@@ -2,6 +2,7 @@ package com.academia.academia.model.service;
 
 import com.academia.academia.model.entity.Asignatura;
 import com.academia.academia.model.entity.AsignaturaCursada;
+import com.academia.academia.model.entity.AsignaturaPlan;
 import com.academia.academia.model.entity.Curso;
 import com.academia.academia.model.entity.CursoMatriculado;
 import com.academia.academia.model.entity.Estudiante;
@@ -10,34 +11,40 @@ import com.academia.academia.model.entity.ProgramaAcademico;
 import java.util.List;
 
 public interface AcademiaServiceIface {
-    List<Estudiante> todosEstudiantes();
-    void guardarEstudiante(Estudiante estudiante);
-    Estudiante buscarEstudiante(Long id);
-    void eliminarEstudiante(Long id);
+    public List<Estudiante> todosEstudiantes();
+    public void guardarEstudiante(Estudiante estudiante);
+    public Estudiante buscarEstudiante(Long id);
+    public void eliminarEstudiante(Long id);
 
     //servicio para asignatura 
-     List<Asignatura> todasAsignaturas();
-    void guardarAsignatura(Asignatura asignatura);
-    Asignatura buscarAsignatura(Long id);
-    void eliminarAsignatura(Long id);
+    public List<Asignatura> todasAsignaturas();
+    public void guardarAsignatura(Asignatura asignatura);
+    public Asignatura buscarAsignatura(Long id);
+    public void eliminarAsignatura(Long id);
 
     //services para curso
-    List<Curso> todosCursos();
-    void guardarCurso(Curso curso);
-    Curso buscarCurso(Long id);
-    void eliminarCurso(Long id);
+    public List<Curso> todosCursos();
+    public void guardarCurso(Curso curso);
+    public Curso buscarCurso(Long id);
+    public void eliminarCurso(Long id);
 
     //services para programa academicos
-     List<ProgramaAcademico> todosProgramasAcademicos();
-    void guardarProgramaAcademico(ProgramaAcademico programaAcademico);
-    ProgramaAcademico buscarProgramaAcademico(Long id);
-    void eliminarProgramaAcademico(Long id);
+    public List<ProgramaAcademico> todosProgramasAcademicos();
+    public void guardarProgramaAcademico(ProgramaAcademico programaAcademico);
+    public ProgramaAcademico buscarProgramaAcademico(Long id);
+    public void eliminarProgramaAcademico(Long id);
 
     //services para Asignatura cursada
-    List<AsignaturaCursada> todasasignaturaCursadas();
-    AsignaturaCursada asignaturaCursada(Long id);
-    List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante); // Asignaturas cursadas del estudiante
+    public List<AsignaturaCursada> todasasignaturaCursadas();
+    public AsignaturaCursada buscarAsignaturaCursada(Long id);
+    public List<AsignaturaCursada> asignaturaCursadasEstudiante(Estudiante estudiante); // Asignaturas cursadas del estudiante
 
     // services para Curso matriculado
-    List<CursoMatriculado> cursoMatriculadoEstudiante(Estudiante estudiante);
+    public List<CursoMatriculado> cursoMatriculadoEstudiante(Estudiante estudiante);
+    public void guardarMatricula(CursoMatriculado cursoMatriculado);
+    public void eliminarMatricula (Long id);
+    public CursoMatriculado buscarCursoMatriculado (Long id);
+
+    // services para Plan de asignaturas
+    public List<AsignaturaPlan> todAsignaturaPlans();
 }

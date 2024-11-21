@@ -3,6 +3,11 @@ package com.academia.academia.model.entity;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "cursos_matriculados")
@@ -16,17 +21,24 @@ public class CursoMatriculado implements Serializable {
     @JoinColumn(name = "estudiante_id", nullable = false)
     private Estudiante estudiante;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
 
+    @NotEmpty
+    @Size(min = 4, max = 6)
     @Column(length = 50)
     private String periodo;
 
+    @NotEmpty
+    @Size(min = 6)
     @Column(length = 20)
     private String estado;
 
     @Column
+    @DecimalMin(value = "0.0", inclusive = true)
+    @DecimalMax(value = "5.0", inclusive = true)
     private double notaFinal;
 
     public CursoMatriculado() {
@@ -54,7 +66,7 @@ public class CursoMatriculado implements Serializable {
 
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
-    }
+    } 
 
     public Curso getCurso() {
         return curso;
@@ -86,5 +98,16 @@ public class CursoMatriculado implements Serializable {
 
     public void setNotaFinal(double notaFinal) {
         this.notaFinal = notaFinal;
-    }  
+    }
+
+    @Override
+    public String toString() {
+        return "CursoMatriculado [id=" + id + ", estudiante=" + estudiante + ", curso=" + curso + ", periodo=" + periodo
+                + ", estado=" + estado + ", notaFinal=" + notaFinal + "]";
+    }
+
+    public Integer getTotalCreditos() {
+        return curso.getAsignatura().getNumero_creditos();
+    }
+    
 }

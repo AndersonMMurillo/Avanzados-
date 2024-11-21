@@ -82,5 +82,10 @@ public class Profesor implements Serializable {
         this.cursos = cursos;
     }
 
+    @Override
+    public String toString() {
+        return "Profesor [id=" + id + ", apellidos=" + apellidos + ", nombres=" + nombres + ", especializacion="
+                + especializacion + ", departamento=" + departamento + "]";
+    }
     
 }

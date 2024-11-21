@@ -21,7 +21,7 @@ public class AsignaturaPlan implements Serializable {
     private Asignatura asignatura;
 
     @Column(length = 11)
-    private int semestre_nivel;
+    private Integer semestre_nivel;
     
     @Column(length = 20)
     private Long prerequisito;
@@ -67,5 +67,10 @@ public class AsignaturaPlan implements Serializable {
         this.asignatura = asignatura;
     }
 
+    @Override
+    public String toString() {
+        return "AsignaturaPlan [id=" + id + ", planEstudio=" + planEstudio + ", asignatura=" + asignatura
+                + ", semestre_nivel=" + semestre_nivel + ", prerequisito=" + prerequisito + "]";
+    }
     
 }

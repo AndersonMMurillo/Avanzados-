@@ -62,5 +62,10 @@ public class PlanEstudio implements Serializable {
     public void setProgramaAcademico(ProgramaAcademico programaAcademico) {
         this.programaAcademico = programaAcademico;
     }
-    
+
+    @Override
+    public String toString() {
+        return "PlanEstudio [id=" + id + ", descripcion=" + descripcion + ", programaAcademico=" + programaAcademico
+                + ", anio_vigencia=" + anio_vigencia + "]";
+    }
 }

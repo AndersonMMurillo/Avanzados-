@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/plan/estudiantes")
+@SessionAttributes("estudiante")
 public class EstudianteController {
     
     private final AcademiaServiceIface service;
@@ -37,6 +38,7 @@ public class EstudianteController {
         List<ProgramaAcademico> programaAcademicos = service.todosProgramasAcademicos();
 
         model.addAttribute("titulo", "Nuevo Estudiante");
+        model.addAttribute("accion", "Crear");
         model.addAttribute("estudiante", new Estudiante());
         model.addAttribute("programas", programaAcademicos);
         return "estudiante/formulario_estudiante";
@@ -60,17 +62,19 @@ public class EstudianteController {
     @PostMapping("/guardar")
     public String guardarEstudiante(@Valid @ModelAttribute Estudiante estudiante, 
         BindingResult result, RedirectAttributes flash,Model model, SessionStatus status) {
+
+            String accion = (estudiante.getId() == null) ? "Guardar" : "Modificar"  ;
          
         if (result.hasErrors()) {
-            model.addAttribute("titulo", estudiante.getId() != null ? "Editar Estudiante" : "Nuevo Estudiante");
+            model.addAttribute("titulo", "Nuevo Estudiante");
+            model.addAttribute("accion", accion);
             model.addAttribute("info", "Complemente o corrija la información de los campos del formulario");
             return "estudiante/formulario_estudiante";
         }
 
-        String mensajeFlash = (estudiante.getId() != null) ? "Estudiante editado con éxito" : "Estudiante creado con éxito";
         service.guardarEstudiante(estudiante);
         status.setComplete();
-        flash.addFlashAttribute("success", mensajeFlash);
+        flash.addFlashAttribute("success", "El registro fue " + (estudiante.getId() == null ? "agregado" : "modificado" ) + " con éxito");
         return "redirect:/plan/estudiantes/listar";
     }
 

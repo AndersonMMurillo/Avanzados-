@@ -32,6 +32,7 @@ public class Curso implements Serializable {
     @JoinColumn(name = "profesor_id", nullable = false)
     private Profesor profesor;
 
+
     public Curso() {
     }
 
@@ -97,6 +98,12 @@ public class Curso implements Serializable {
 
     public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
+    }
+
+    @Override
+    public String toString() {
+        return "Curso [id=" + id + ", horario=" + horario + ", periodo=" + periodo + ", cupoMaximo=" + cupoMaximo
+                + ", aula=" + aula + ", asignatura=" + asignatura + ", profesor=" + profesor + "]";
     }
 
 }
